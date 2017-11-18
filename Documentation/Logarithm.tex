@@ -1,0 +1,23 @@
+\documentclass{standalone}
+
+\usepackage{pgfplots}
+
+\begin{document}
+	\begin{tikzpicture}
+	\coordinate (LX) at (-1.00, 0.00); % left x
+	\coordinate (RX) at (6.00, 0.00); % right x
+	\coordinate (BY) at (0.00, -3.00); % bottom y
+	\coordinate (TY) at (0.00, 3.00); % top y
+
+	\draw[->] (LX) -- (RX);
+	\node at (5.8,-0.4) {\textbf{\textit{x}}};
+
+	\draw[->] (BY) -- (TY);
+	\node[right] at (0.2, 2.8) {\textbf{\textit{log x}}};
+
+	\draw[-] (1,-0.15) -- (1,0.15);
+	\node at (1, -0.4) {1};
+
+	\draw[blue, line width=1.75pt, domain=0.05:6.00, samples=500] plot[smooth] (\x, {ln(\x)});
+	\end{tikzpicture}
+\end{document}
