@@ -241,9 +241,34 @@ que tendran una importancia mayor en la etapa de clasificación.
 \end{figure}
 
 Finalmente la clasificación total de los terminos es calculada como la multiplicación
-entre el factor $TF$ y $IDF$ para asociar tanto la cantidad de veces que un termino 
+entre el factor $TF$ y $IDF$ para asociar tanto la cantidad de veces que un termino
 aparece en el texto, como su importancia general, obteniendo así la representación
-numerica final que sera usada como entrada para el algoritmo Kmeans.
+numerica final que sera usada como entrada para el algoritmo Kmeans.\\
+
+Ahora, en cuanto al rendimiento de esta nueva implementación, se espera que
+los tiempos necesarios para completar la ejecución sean mayores que la version realizada
+en el proyecto pasado, esto por varias razones, la primera es la plataforma de ejecución,
+debido a que en la practica de HPC se utilizaba el hardware directamente desde
+la aplicación, el rendimiento podia subir más de lo que se podria lograr con las
+maquinas virtuales del cluster Hadoop, incluso teniendo en cuenta que en esta
+ultima plataforma se hacia uso de una arquitectura distribuida. En segundo lugar
+el el lenguaje de programación, en la practica pasada se utilizo C++ con Cuda para
+implementar el algoritmo, mientras que en este proyecto se utilizo Python, lo que
+agrega capas de abstracción, las cuales facilitan la programación, pero aumentan
+los tiempos de ejecución. Finalmente tal como se hablo en la practica pasada,
+se encontro que una implementación en GPU resulta en menores tiempos de ejecución
+gracias a su arquitectura altamente paralela y su rapida creación de procesos.\\
+
+Sin embargo, una implementación como la que se presenta en esta practica no siempre
+tendra un rendimiento menor a una diseñada para ejecutar en un ambiente HPC, de
+hecho es necesario que estos algoritmos puedan ser implementados en arquitecturas
+diseñadas para el tratamiento de grandes volumenes de datos, tal como un cluster
+Hadoop, debido a que, apesar de su velocidad, una infraestructura HPC perderia
+gran parte de su rendimiento en casos en los que la cantidad de datos sea grande,
+mientras que arquitecturas como la utilizada en este proyecto mostrarian todo
+su potencial logrando tiempos de ejecucion y costos mucho menores. Por esta razón
+es necesario hacer la aclaración de que se espera un rendimiento menor que en la
+practica de HPC, pero esto se debe al tamaño de los datos utilizados.
 
 \section{Implementación}
 

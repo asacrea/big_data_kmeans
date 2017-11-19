@@ -7,10 +7,10 @@ DocumentationDep=Logarithm.pdf\
 
 Documentation.pdf: $(DocumentationDep)
 	pdflatex Documentation.tex
-	bibtex Documentation
-	pdflatex Documentation.tex
-	pdflatex Documentation.tex
-	pdflatex Documentation.tex
+#	bibtex Documentation
+#	pdflatex Documentation.tex
+#	pdflatex Documentation.tex
+#	pdflatex Documentation.tex
 
 
 Logarithm.pdf: Logarithm.tex
