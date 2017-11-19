@@ -318,17 +318,54 @@ los documentos.
 
 \section{Resultados}
 
+En esta seción se muestran los resultados de ejecutar el algorimo Kmeans en la
+plataforma Spark del datacenter academico y posteriormente se comparan los
+resultados con la implementación creada en el proyecto pasado. Se realizaron 6 tipos
+de pruebas, todas con el mismo subconjuntos del dataset Gutenberg, el cual fue
+tomado de la carpeta compartida del datacenter academico, las pruebas realizadas
+fueron:\\
+
+\begin{itemize}
+    \item Ejecución solo en el master del cluster, a estas pruebas se les denomina local.
+    \item Ejecución distribuida con 2, 3 y 4 procesadores, a estas pruebas se les denomina
+          distribuido 2, 3 y 4 respectivamente.
+    \item Ejecucion de la version serial de la practica pasada, a esta prueba se le
+          denomina serial.
+    \item Ejecucion de la version paralela de la practica pasada, a esta prueba se le
+          denomina paralela.
+\end{itemize}
+
+Al ejecutar las primeras pruebas sobre la arquitectura Spark se encontro como
+a medida que se utilizaban más procesadores y era necesaria mas comunicación entre
+los diferentes procesos que componen la ejecución del algoritmo, el rendimiento se
+deteriora cada vez más siguiendo un comportamiento casi lineal, tal como se puede
+observar en la Figura \ref{plot:spark}.
+
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1]{ResultsSpark.pdf}
     \caption{Resultados Spark}
+    \label{plot:spark}
 \end{figure}
+
+Finalmente, tal como se esperaba, al comparar los rendimientos de la implementación
+en Spark y la de HPC se puede observar una notoria diferencia en los tiempos
+de ejecución, tal como se muestra en la figura \ref{plot:compar}, donde se puede
+observar como los tiempos de ejecución de la plataforma Spark se incrementan más
+de lo que lo hacen las implementaciones serial y paralela del proyecto pasado.
 
 \begin{figure}[H]
     \centering
     \includegraphics[scale=1]{ResultsCombined.pdf}
     \caption{Resultados combinados}
+    \label{plot:compar}
 \end{figure}
+
+Se considera conveniente volver a recalcar que las ejecuciónes de la plataforma
+Spark pierden rendimiento a medida que se aumentan procesadores debido a que el
+tamaño del dataset utilizado en la ejecución del algoritmo es pequeño, lo que
+provoca que el tiempo utilizado en la comunicación entre los procesadores se
+vuelva más notaria y termine afectando de manera negativa el rendimiento.
 
 \section{Conclusiones}
 
