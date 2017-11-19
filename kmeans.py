@@ -11,9 +11,13 @@ from pyspark.mllib.linalg import SparseVector
 if len(sys.argv) < 3: # use default
     inputDir = "/user/csanch35/datasets/gutenberg/" 
     outputDir = "/user/csanch35/resultado_practica/data_out1"
+    k = 5
+    maxIter = 450
 else: # use the path provided by the user
     inputDir = sys.argv[1]
     outputDir = sys.argv[2]
+    k = int(sys.argv[3])
+    maxIter = int(sys.argv[4])
 
 if __name__ == "__main__":
     #Configure spark environment
@@ -43,7 +47,7 @@ if __name__ == "__main__":
     #Calculate the final importance of the frequency of the words in the documents
     tfidf = idf.transform(tf)
     #exectute K-means algorithm
-    clusters = KMeans.train(tfidf, 10, maxIterations=450)
+    clusters = KMeans.train(tfidf, k, maxIterations=maxIter)
     #get information about the clasification
     clusterid = clusters.predict(tfidf).collect()
     #get name of the documents
