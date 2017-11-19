@@ -1,5 +1,7 @@
 DocumentationDep=Logarithm.pdf\
 				 LogarithmPos.pdf\
+				 ResultsSpark.pdf\
+				 ResultsCombined.pdf\
 				 Documentation.bib\
 				 Documentation.tex
 
@@ -16,6 +18,12 @@ Logarithm.pdf: Logarithm.tex
 
 LogarithmPos.pdf: LogarithmPos.tex
 	pdflatex LogarithmPos.tex
+
+ResultsSpark.pdf: ResultsSpark.tex Local.dat Distributed2.dat Distributed3.dat Distributed4.dat
+	pdflatex ResultsSpark.tex
+
+ResultsCombined.pdf: ResultsCombined.tex Serial.dat Parallel.dat Local.dat Distributed2.dat Distributed3.dat Distributed4.dat
+	pdflatex ResultsCombined.tex
 
 clean:
 	rm -f *.pdf

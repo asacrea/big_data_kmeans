@@ -1,0 +1,23 @@
+\documentclass{standalone}
+
+\usepackage{pgfplotstable}
+\usepackage{pgfplots}
+
+\begin{document}
+
+\begin{tikzpicture}
+    \begin{axis}[xlabel=Valor de k, ylabel=Tiempo (s),
+                 legend style={at={(0.5,-0.1)},anchor=north}]
+
+        \addplot table [x=x, y=t]{Distributed4.dat};
+        \addlegendentry{Distribuido 4}
+        \addplot table [x=x, y=t]{Distributed3.dat};
+        \addlegendentry{Distribuido 3}
+        \addplot table [x=x, y=t]{Distributed2.dat};
+        \addlegendentry{Distribuido 2}
+        \addplot table [x=x, y=t]{Local.dat};
+        \addlegendentry{Local}
+    \end{axis}
+\end{tikzpicture}
+
+\end{document}
