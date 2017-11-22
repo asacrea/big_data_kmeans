@@ -165,14 +165,11 @@ ciencia y la ingeniería.
 
 \section{Análisis y diseño}
 
-Para la implementacion del algoritmo se tuvieron en cuenta varios factores,
-el primero de ellos fue la forma de represantar los textos de tal manera que se
-les pueda calcular una medida de distancia. Para lograr este objetivo es
+Para la implementación del algoritmo se tuvieron en cuenta varios factores,
+el primero de ellos fue la forma de represantar los textos de tal manera que se les pueda calcular una medida de distancia. Para lograr este objetivo es
 necesario representarlos de forma numérica, por ello se hacía necesario el uso
 de un algoritmo que nos permitiera traducir los textos en vecotres de
-carácteristicas sobre los cuales se pudieran efectuar
-operaciones matematicas. Despues de analizar varias alternativas, se decidió
-utilizar el algoritmo TF-IDF.\\
+carácteristicas sobre los cuales se pudieran efectuar operaciones matemáticas. Después de analizar varias alternativas, se decidió utilizar el algoritmo TF-IDF.\\
 
 TF-IDF es un algoritmo compuesto por 4 etapas, la primera de ellas es la
 representación de los documentos en una primera version numérica, para esto
@@ -185,17 +182,15 @@ se utiliza una función hash.
 \end{figure}
 
 Dicha función toma las palabras de cada uno de los textos y devuelve un
-identificador numerico que la representa. Luego esta representación es usada
+identificador numérico que la representa. Luego está representación es usada
 para calcular la frecuencia de las palabras en el texto, esta etapa es llamada
 TF (Term frequency). Es necesario tener en cuenta que debido a la manera en la
 que opera una función hash pueden presentarce colisiones, lo que siginifica
-que dos palabras distintas puedan ser asignadas al mismo numero, para disminuir
-este problema se puede aumentar el rango de la función, en este caso
+que dos palabras distintas puedan ser asignadas al mismo número, para disminuir este problema se puede aumentar el rango de la función, en este caso
 se utilizó $2^{20}$, el cual es el estandar de la libreria de machine learning
 de Spark.\\
 
-Posteriormente se calcula la importancia de cada una de las palabras basados en
-el siguiente modelo\\
+Posteriormente se calcula la importancia de cada una de las palabras basados en el siguiente modelo\\
 
 \begin{equation}
     IDF(t,D) = log \left( \frac{|D| + 1}{DF(t,D) + 1} \right)
@@ -204,21 +199,11 @@ el siguiente modelo\\
 \vspace{0.5cm}
 
 Donde $D$ es el conjunto de documentos a ser analizados, $t$ representa el
-termino al que se le desea calcular su importancia, $|D|$ representa la
+término al que se le desea calcular su importancia, $|D|$ representa la
 cardinalidad del conjunto $D$, es decir la cantidad de documentos, y $DF(t,D)$
-representa la cantidad de documentos en la que el termino en cuestión aperece.\\
+representa la cantidad de documentos en la que el término en cuestión aperece.\\
 
-Para entender mejor la forma de esta función es necesario recordar ciertos aspectos,
-el primero de ellos es que una división no esta definida si su denominador es $0$,
-por esta razón se debe agregar un $1$ al cálculo de la función $DF(t,D)$ para asegurar
-que la división siempre este definida. En segundo lugar se debe recordar que el
-logaritmo se anula en $x=0$, tal como se muestra en la Figura \ref{fun:log}, lo que
-explica la adición de una unidad al cálculo del numerador para evitar que la función
-$IDF(t,D)$ resulte en un valor nulo. Finalmente es necesario notar que la
-desigualdad $|D| >= DF(t,D)$ siempre es verdad, lo que implica que la división
-tiene el dominio $[1,\infty)$, tal como se muestra en la Figura \ref{fun:logpos},
-lo que significa que la expresion trabajada siempre resultara en valores positivos,
-los cuales son acotados por la función logaritmo.
+Para entender mejor la forma de esta función es necesario recordar ciertos aspectos, el primero de ellos es que una división no esta definida si su denominador es $0$, por esta razón se debe agregar un $1$ al cálculo de la función $DF(t,D)$ para asegurar que la división siempre este definida. En segundo lugar se debe recordar que el logaritmo se anula en $x=0$, tal como se muestra en la Figura \ref{fun:log}, lo que explica la adición de una unidad al cálculo del numerador para evitar que la función $IDF(t,D)$ resulte en un valor nulo. Finalmente es necesario notar que la desigualdad $|D| >= DF(t,D)$ siempre es verdad, lo que implica que la división tiene el dominio $[1,\infty)$, tal como se muestra en la Figura \ref{fun:logpos}, lo que significa que la expresión trabajada siempre resultará en valores positivos, los cuales son acotados por la función logaritmo.
 
 \begin{figure}[H]
     \includegraphics[scale=1]{Logarithm.pdf}
@@ -226,13 +211,8 @@ los cuales son acotados por la función logaritmo.
     \label{fun:log}
 \end{figure}
 
-Una vez entendido esto se puede observar como la funcion $IDF(t,D)$ provee información
-sobre la importancia de un termino, esto se debe a que tiene en cuenta la relación entre
-la cantidad de documentos que contienen el termino en cuestion con la cantidad de
-documentos totales, lo que implica que los terminos que son bastante repetidos tendran
-una importancia baja, resultando en una influencia baja en la decision de clasificación,
-mientras que los terminos más unicos seran clasificados con un valor más alto, implicando
-que tendran una importancia mayor en la etapa de clasificación.
+Una vez entendido esto se puede observar como la función $IDF(t,D)$ provee información sobre la importancia de un término, esto se debe a que tiene en cuenta la relación entre la cantidad de documentos que contienen el término en cuestion con la cantidad de documentos totales, lo que implica que los términos que son bastante repetidos tendrán una importancia baja, resultando en una influencia baja en la decisián de clasificación, mientras que los términos más unicos seran clasificados con un valor más alto, implicando
+que tendrán una importancia mayor en la etapa de clasificación.
 
 \begin{figure}[H]
     \includegraphics[scale=1]{LogarithmPos.pdf}
@@ -240,60 +220,24 @@ que tendran una importancia mayor en la etapa de clasificación.
     \label{fun:logpos}
 \end{figure}
 
-Finalmente la clasificación total de los terminos es calculada como la multiplicación
-entre el factor $TF$ y $IDF$ para asociar tanto la cantidad de veces que un termino
-aparece en el texto, como su importancia general, obteniendo así la representación
-numerica final que sera usada como entrada para el algoritmo Kmeans.\\
+Finalmente la clasificación total de los terminos es calculada como la multiplicación entre el factor $TF$ y $IDF$ para asociar tanto la cantidad de veces que un término aparece en el texto, como su importancia general, obteniendo así la representación numérica final que sera usada como entrada para el algoritmo Kmeans.\\
 
 Ahora, en cuanto al rendimiento de esta nueva implementación, se espera que
-los tiempos necesarios para completar la ejecución sean mayores que la version realizada
-en el proyecto pasado, esto por varias razones, la primera es la plataforma de ejecución,
-debido a que en la practica de HPC se utilizaba el hardware directamente desde
-la aplicación, el rendimiento podia subir más de lo que se podria lograr con las
-maquinas virtuales del cluster Hadoop, incluso teniendo en cuenta que en esta
-ultima plataforma se hacia uso de una arquitectura distribuida. En segundo lugar
-el el lenguaje de programación, en la practica pasada se utilizo C++ con Cuda para
-implementar el algoritmo, mientras que en este proyecto se utilizo Python, lo que
-agrega capas de abstracción, las cuales facilitan la programación, pero aumentan
+los tiempos necesarios para completar la ejecución sean mayores que la versión realizada en el proyecto pasado, esto por varias razones, la primera es la plataforma de ejecución, debido a que en la practica de HPC se utilizaba el hardware directamente desde la aplicación, el rendimiento podia subir más de lo que se podria lograr con las máquinas virtuales del cluster Hadoop, incluso teniendo en cuenta que en esta última plataforma se hacia uso de una arquitectura distribuida. En segundo lugar el el lenguaje de programación, en la práctica pasada se utilizo C++ con Cuda para implementar el algoritmo, mientras que en éste proyecto se utilizó Python, lo que agrega capas de abstracción, las cuales facilitan la programación, pero aumentan
 los tiempos de ejecución. Finalmente tal como se hablo en la practica pasada,
-se encontro que una implementación en GPU resulta en menores tiempos de ejecución
-gracias a su arquitectura altamente paralela y su rapida creación de procesos.\\
+se encontró que una implementación en GPU resulta en menores tiempos de ejecución gracias a su arquitectura altamente paralela y su rapida creación de procesos.\\
 
-Sin embargo, una implementación como la que se presenta en esta practica no siempre
-tendra un rendimiento menor a una diseñada para ejecutar en un ambiente HPC, de
-hecho es necesario que estos algoritmos puedan ser implementados en arquitecturas
-diseñadas para el tratamiento de grandes volumenes de datos, tal como un cluster
-Hadoop, debido a que, apesar de su velocidad, una infraestructura HPC perderia
-gran parte de su rendimiento en casos en los que la cantidad de datos sea grande,
-mientras que arquitecturas como la utilizada en este proyecto mostrarian todo
-su potencial logrando tiempos de ejecucion y costos mucho menores. Por esta razón
-es necesario hacer la aclaración de que se espera un rendimiento menor que en la
-practica de HPC, pero esto se debe al tamaño de los datos utilizados.
+Sin embargo, una implementación como la que se presenta en esta práctica no siempre tendrá un rendimiento menor a una diseñada para ejecutar en un ambiente HPC, de hecho es necesario que estos algoritmos puedan ser implementados en arquitecturas diseñadas para el tratamiento de grandes volumenes de datos, tal como un cluster Hadoop, debido a que, apesar de su velocidad, una infraestructura HPC perdería gran parte de su rendimiento en casos en los que la cantidad de datos sea grande, mientras que arquitecturas como la utilizada en este proyecto mostrarian todo su potencial logrando tiempos de ejecución y costos mucho menores. Por esta razón es necesario hacer la aclaración de que se espera un rendimiento menor que en la practica de HPC, pero esto se debe al tamaño de los datos utilizados.
 
 \section{Implementación}
 
-Teniendo en cuenta que se trata un problema en el cúal puede estar involucrado
-el procesamiento de granades volumens de información, se hace uso de
-herramientas diseñadas especialmente para este proposito, como lo son Apache
-Spark y Hdfs del ecosistema Hadoop, quienes son utilizados respectivamente para
-el procesamiento de la información y su almacenamiento.\\
+Teniendo en cuenta que se trata un problema en el cúal puede estar involucrado el procesamiento de granades volumenes de información, se hace uso de herramientas diseñadas especialmente para este proposito, como lo son Apache Spark y Hdfs del ecosistema Hadoop, quienes son utilizados respectivamente para el procesamiento de la información y su almacenamiento.\\
 
-para la clasifiación de los documentos, se hace uso de las librerías que provee
-Spark, de las cuales algunas de las funciones implementadas están diseñadas
-para este proposito. apache spark posee funciones para la transformación de los
-docuementos en representaciones numéricas o cuantitavas, en este trabajo se
-hace uso de TF e IDF, las cuales realizan el procesaminto de los archivos de
-textos como se explicó en la sección de analisis y diseño. Después de la
-transformación de los documentos se procede a utilizar kmeans, la cúal se
-encuentra implementada en la libreria Mlib de Apache Spark.\\
+Para la clasifiación de los documentos, se hace uso de las librerías que provee Spark, de las cuales algunas de las funciones implementadas están diseñadas para éste propósito. Apache Spark posee funciones para la transformación de los documentos en representaciones numéricas o cuantitativas, en este trabajo se hace uso de TF e IDF, las cuales realizan el procesaminto de los archivos de textos como se explicó en la sección de análisis y diseño. Luego de la transformación de los documentos se procede a utilizar kmeans, función qué se encuentra implementada en la librería Mlib de Apache Spark.\\
 
-Para la tranfoamción del documento en una correcta representación numérica para
-claificar los docuemntos con Kmeans se requiere utilizar dos funciones que
-Spark provee de forma independiente, las cuales son TF e IDF.\\
+Para la transformación del documento en una representación numérica  correcta en la clasificación con Kmeans, se requiere utilizar dos funciones que Spark provee, las cuales son TF e IDF.\\
 
-la función tf calcula la frecuencia de las palabras dentro del documento, a
-esta se le debe pasar como parametro el documento que queremos transformar y lo
-hacemos de la siguente manera.\\
+La función TF calcula la frecuencia de las palabras dentro del documento. A ésta se le debe pasar como parametro el documento que queremos transformar y lo hacemos de la siguente manera.\\%
 
 \begin{lstlisting}
     tf = hashingTF.transform(documents)
@@ -301,10 +245,9 @@ hacemos de la siguente manera.\\
 
 \vspace{0.5cm}
 
-Luego procedemos a calcular los valores de la frecuencua inversa de las
-palabras de los documentos, la cual nos permite conocer la importancia de las
-palabras en esto. A esta función le pasamos como parametro la variable tf, la
-cual calculas con anterioridad.\\
+Luego procedemos a calcular los valores de la frecuencia inversa de las palabras de los documentos, lo que nos permite conocer la importancia de las palabras en estos. A esta función le pasamos como parámetro la variable TF, quien fue calculada con anterioridad.\\
+
+\vspace{0.5cm}
 
 \begin{lstlisting}
     idf = IDF(minDocFreq=5).fit(tf)
@@ -312,13 +255,37 @@ cual calculas con anterioridad.\\
 
 \vspace{0.5cm}
 
-Para terminar con la transformación debemos multiplicar td e idf, y dicho valor
-nos dará los valores finales de la importancia de cada las palabras dentro de
-los documentos.
+Para términar con la transformación debemos multiplicar TF e IDF, y dicho valor nos dará los valores finales de la importancia de cada una de las palabras dentro de los documentos.
+
+Mlib nos provee el algoritmo Kmeans, quien nos permite llevar a cabo el último paso para la clasificación de documentos, pues este nos permite separarlos y asignarlos a un conjunto o categoría.
+
+La función Kmeans tiene 3 parametros que son necesarios para ejecutar la clasificación, estos son el K o número de clusters que deseamos, el número máximo de iteraciones para la convergencia del algoritmo y el datasets con valores numéricos, este último es dónde cobra sentido la realización de los indices invertidos y la frecuencia de las palabras, pues kmeans no permite la clasificación de variables categóricas.
+
+\vspace{0.5cm}
+
+\begin{lstlisting}
+clusters = KMeans.train(tfidf, k, \
+		   maxIterations=maxIter)
+\end{lstlisting}
+
+\vspace{0.5cm}
+
+El algoritmo al ser ejecutado por Spark, los resultado siguen conservando la forma en la que son almacenados en memoria por RDD, por lo que debemos hacer un colect sobre los nombres de los grupos y sobre los resultados de la clasificación para agruparlos y conocer que documento pertenece a que cluster.
+
+\vspace{0.5cm}
+
+\begin{lstlisting}
+clusterid = clusters.predict(tfidf) \
+			.collect()
+	
+names = names.collect()
+\end{lstlisting}
+
+\vspace{0.5cm}
 
 \section{Resultados}
 
-En esta seción se muestran los resultados de ejecutar el algorimo Kmeans en la
+En esta sección se muestran los resultados de ejecutar el algorimo Kmeans en la
 plataforma Spark del datacenter academico y posteriormente se comparan los
 resultados con la implementación creada en el proyecto pasado. Se realizaron 6 tipos
 de pruebas, todas con el mismo subconjuntos del dataset Gutenberg, el cual fue
@@ -368,7 +335,15 @@ provoca que el tiempo utilizado en la comunicación entre los procesadores se
 vuelva más notaria y termine afectando de manera negativa el rendimiento.
 
 \section{Conclusiones}
+En en el tratamiento de grandes volumenes de información, y con la variabilidad de los datos o el almacenamiento de datos no estructurados, las arquitecturas de hardware y las soluciones de software que brindan los conceptos de las tecnologías de big data a través de los frameworks como Hadoop o Spark, hacen posible el procesamiento y la manipulación de la información, orientada al análisis para la adquisión de conocimiento a partir de estos.\\
 
+En este estudio encontramos que los algortimos programados con tecnologías big data, no tenian un mejor rendimiento que los algoritmos realizados en la práctica anterior, en la que el rendimiento era un punto clave y por lo que se plantearon estrategias basadas en el conocimiento de la arquitectura del hardware para sacar el mayor provecho de estos recursos y lograr un buen rendimiento a través del procesamiento en GPU. Por el contrario en la elaboración de éste trabajo se analizó más el como tratar los datos desde el punto de vista del almacenamiento y como almacenarlos para procesarlos a partir del uso de herramientas que proveen los frameworks.\\
+
+En la elaboración de la práctica no se hizo necesario un analisis muy profundo del uso de la arquitectura del hardware y como utilizar esta para optimizar el tiempo de ejecución de los algoritmos, esto devido a que las herramientas de software que proveen los entornos de desarrollo para big data abstraen esto agregando capaz adicionales para que sea hasta cierto punto transparente para el usuario. El caso de esta implementación se limitó al uso de librerías que provee Apache Spark para hacer minería de textos.\\
+
+Los sistemas que usan tecnologías de big data están surgiendo rápidamente como uno de los sistemas más críticos en el entorno de TI de las organizaciones, pero con una cantidad masiva de datos, surgen problemas de rendimiento. Si los sistemas big data no se pueden usar para hacer pronósticos para la toma de decisiones comerciales críticas, o para proporcionar información sobre valores comerciales ocultos bajo grandes cantidades de datos en tiempos de computo razonables, estos sistemas pierden su relevancia.\\
+
+Por lo anterior es importante pensar en el rendimiento a la hora de desarrollar para está técnología y deja en nuestras manos la labor de investigar para seguir profundizando y mejorando las soluciones que generamos.
 
 \bibliographystyle{unsrt}
 \bibliography{Documentation}
