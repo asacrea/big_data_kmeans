@@ -38,11 +38,11 @@
 \vspace{0.5cm}
 
 \begin{abstract}
-Las nuevas técnologías traen consigo cambios en la forma realizar las labores
-de creación de algoritmos pues debido a la cantidad de información que
-producimos para representar el mundo real en entornos virtuales, hace generar
+Las nuevas técnologías traen consigo cambios en la forma de realizar las labores
+de creación de algoritmos, pues debido a la cantidad de información que
+producimos para representar el mundo real en entornos virtuales, se genera
 la imperiosa necesidad de acelerar el crecimiento de los atributos o cualidades
-del hardware de las máquinas que producimos. A pesar de que las tecnologías de
+del hardware que producimos. A pesar de que las tecnologías de
 paralelización existen ya hace algunos años, con este crecimiento abrumador de
 la información que producimos, nos vemos en la obligación de migrar a un
 razonamiento en paralelo respecto a la producción de algoritmos. En este
@@ -117,10 +117,10 @@ determinado de objetos en grupos, de modo que los objetos en el mismo grupo
 sean similares y los objetos en diferentes grupos sean diferentes entre sí. El
 término objetos se usa para referirse a entidades, observaciones o puntos de
 datos en un conjunto de datos. El término clúster, aunque no tiene una
-definición precisa este describe un grupo de objetos.\\
+definición precisa, describe un grupo de elementos.\\
 
 El clustering con K-means es un algoritmo de clasificación y un técnica de
-entrenamiento no supervidada, y es el mejor representante del clustering duro
+entrenamiento no supervisada, y es el mejor representante del clustering duro
 (No difuso). Por clústeres duro nos referimos a los algoritmos de clustering
 que intentan dividir los datos disponibles en algunos subconjuntos para que
 cada punto de datos solo puede pertenecer a un subconjunto.\\
@@ -147,21 +147,21 @@ seguiremos utilizando en este trabajo.
 
 Abajo detallaremos un algoritmo básico de K-means, el cual consta de 5 pasos.\\
 
-\begin{enumerate}[]
+\begin{enumerate}
     \item Seleccione aleatoriamente K puntos de datos del conjunto de datos de
           entrada y asignelos como centroides de los clústeres c1, c2,..., cK.
     \item Calculamos la distancia entre los centroides y cada uno de los datos.
     \item Calculamos la posición de los centroides de modo que estos se ubiquen
           aproximadamente en el centro del cluster.
     \item Repetimos del el paso 2 y 4 hasta cumplir con los criterios de parada
-          que se definan.\\
+          que se definan.
+\end{enumerate}
 
 Este algortimo de clustering puede ayudarnos a revelar la estructura subyacente
 de los datos y, por este motivo,se ha convertido en una de las técnicas más
 utilizadas para el análisis exploratorio de datos en diferentes campos de la
 ciencia y la ingeniería.
 
-\end{enumerate}
 
 \section{Análisis y diseño}
 
